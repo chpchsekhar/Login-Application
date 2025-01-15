@@ -1,39 +1,34 @@
-from tkinter import *
-from login_view import Login
-from register import Register
-from home import Home
+from tkinter import Tk, Frame, Button, Label
+from registration import Registration
+from login import Login
 
 class MainApp:
-    def __init__(self, master):
-        self.master = master
-        self.master.title("User Login and Registration")
-        self.master.geometry("400x300")
+    def __init__(self, root):
+        self.root = root
+        self.root.title("User Authentication App")
+        self.root.geometry("300x200")
 
-        self.show_login()
+        self.frame = Frame(self.root)
+        self.frame.pack(pady=20)
 
+        self.label = Label(self.frame, text="Welcome to User Auth App")
+        self.label.pack()
+
+        self.register_button = Button(self.frame, text="Register", command=self.show_registration)
+        self.register_button.pack(pady=5)
+
+        self.login_button = Button(self.frame, text="Login", command=self.show_login)
+        self.login_button.pack(pady=5)
+
+    def show_registration(self):
+        self.frame.pack_forget()
+        self.registration = Registration(self.root)
+        
     def show_login(self):
-        self.clear_frame()
-        self.login_frame = Login(self.master, self.show_register, self.show_home)
-        self.login_frame.pack()
-
-    def show_register(self):
-        self.clear_frame()
-        self.register_frame = Register(self.master, self.show_login)
-        self.register_frame.pack()
-
-    def show_home(self):
-        self.clear_frame()
-        self.home_frame = Home(self.master, self.show_login)
-        self.home_frame.pack()
-
-    def clear_frame(self):
-        for widget in self.master.winfo_children():
-            widget.destroy()
+        self.frame.pack_forget()
+        self.login = Login(self.root)
 
 if __name__ == "__main__":
-    try:
-        root = Tk()
-        app = MainApp(root)
-        root.mainloop()
-    except Exception as e:
-        print(f"An error occurred: {e}")
+    root = Tk()
+    app = MainApp(root)
+    root.mainloop()
